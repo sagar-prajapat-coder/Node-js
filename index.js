@@ -60,9 +60,22 @@ const app = express();
 const path = require('path');
 const publicpath = path.join(__dirname,'html');
 
+app.set('view engine','ejs');
+
 app.get('',(_,resp)=>{
    resp.sendFile(`${publicpath}/index.html`);
 });
+ 
+// ejs use 
+app.get('/profile',(_,resp)=>{
+   const user = {
+      name:'sagar',
+      email:'sagar@gmail.com',
+      skills:['Html','Js','Python','Node js']
+   }
+   resp.render('profile',{user}); 
+});
+
 
 app.get('/about',(_,resp)=>{
    resp.sendFile(`${publicpath}/about.html`);
