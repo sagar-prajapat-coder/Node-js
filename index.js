@@ -3,6 +3,8 @@
 // const colors = require('colors');
 // const data = require('./data');
 const express = require('express');
+const requfilter = require('./middleware');
+const route = express.Router();
 // http.createServer((req, res) => {
 //    res.writeHead(200,{'content-type':'application\json'});
 //    res.write(JSON.stringify(data));
@@ -55,9 +57,19 @@ const app = express();
 
 
 
+// apply middelware
+
+
+// apply middleware group of routes
+route.use(requfilter);
+
+// app.use(reqfilter);
+
 // html page folder access
 
+
 const path = require('path');
+const exp = require('constants');
 const publicpath = path.join(__dirname,'html');
 
 app.set('view engine','ejs');
@@ -77,12 +89,14 @@ app.get('/profile',(_,resp)=>{
 });
 
 
-app.get('/about',(_,resp)=>{
+route.get('/about',(_,resp)=>{
    resp.sendFile(`${publicpath}/about.html`);
 });
 
 app.get('*',(_,resp)=>{
    resp.sendFile(`${publicpath}/404.html`);
 });
+
+app.use('/',route);
 // app.use(express.static(publicpath));
 app.listen('4000');
