@@ -2,9 +2,9 @@
 // const http = require('http');
 // const colors = require('colors');
 // const data = require('./data');
-const express = require('express');
-const requfilter = require('./middleware');
-const route = express.Router();
+// const express = require('express');
+// const requfilter = require('./middleware');
+// const route = express.Router();
 // http.createServer((req, res) => {
 //    res.writeHead(200,{'content-type':'application\json'});
 //    res.write(JSON.stringify(data));
@@ -43,7 +43,7 @@ const route = express.Router();
 
 
 // use express js and routing
-const app = express();
+// const app = express();
 // app.get('',(req,res)=>{
 
 //    res.send('Hello this is home page'+' '+req.query.name);
@@ -61,42 +61,61 @@ const app = express();
 
 
 // apply middleware group of routes
-route.use(requfilter);
+// route.use(requfilter);
 
-// app.use(reqfilter);
+// // app.use(reqfilter);
 
-// html page folder access
+// // html page folder access
 
 
-const path = require('path');
-const exp = require('constants');
-const publicpath = path.join(__dirname,'html');
+// const path = require('path');
+// const exp = require('constants');
+// const publicpath = path.join(__dirname,'html');
 
-app.set('view engine','ejs');
+// app.set('view engine','ejs');
 
-app.get('',(_,resp)=>{
-   resp.sendFile(`${publicpath}/index.html`);
-});
+// app.get('',(_,resp)=>{
+//    resp.sendFile(`${publicpath}/index.html`);
+// });
  
-// ejs use 
-app.get('/profile',(_,resp)=>{
-   const user = {
-      name:'sagar',
-      email:'sagar@gmail.com',
-      skills:['Html','Js','Python','Node js']
-   }
-   resp.render('profile',{user}); 
-});
+// // ejs use 
+// app.get('/profile',(_,resp)=>{
+//    const user = {
+//       name:'sagar',
+//       email:'sagar@gmail.com',
+//       skills:['Html','Js','Python','Node js']
+//    }
+//    resp.render('profile',{user}); 
+// });
 
 
-route.get('/about',(_,resp)=>{
-   resp.sendFile(`${publicpath}/about.html`);
-});
+// route.get('/about',(_,resp)=>{
+//    resp.sendFile(`${publicpath}/about.html`);
+// });
 
-app.get('*',(_,resp)=>{
-   resp.sendFile(`${publicpath}/404.html`);
-});
+// app.get('*',(_,resp)=>{
+//    resp.sendFile(`${publicpath}/404.html`);
+// });
 
-app.use('/',route);
-// app.use(express.static(publicpath));
-app.listen('4000');
+// app.use('/',route);
+// // app.use(express.static(publicpath));
+// app.listen('4000');
+
+
+
+
+// connect database
+const {MongoClient}  =  require('mongodb');
+const url = 'mongodb+srv://sagarprajapat250:caz8G4qoEcrAqF1F@cluster0.l7p64.mongodb.net/retryWrites=true&w=majority&appName=Cluster0';
+const database = 'testnodejs';
+const client = new MongoClient(url);
+
+async function getData(){
+   let result = await client.connect();
+   let db = result.db(database);
+   let collection = db.collection('users');
+   let response = await collection.find({}).toArray();
+   console.log(response);
+}
+
+getData();
