@@ -115,7 +115,7 @@ async function getData(){
    let db = result.db(database);
    let collection = db.collection('users');
    let response = await collection.find({}).toArray();
-   console.log(response);
+   // console.log(response);
 }
 
 getData();
