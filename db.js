@@ -1,6 +1,6 @@
 const {MongoClient}  =  require('mongodb');
-const url = 'mongodb+srv://sagarprajapat250:caz8G4qoEcrAqF1F@cluster0.l7p64.mongodb.net/retryWrites=true&w=majority&appName=Cluster0';
-const database = 'testnodejs';
+const url = 'mongodb+srv://sagareoxysit:kTEtpmkApEjgnjSQ@cluster0.qin7c.mongodb.net/';
+const database = 'test';
 const client = new MongoClient(url);
 
 async function dbConnect(){
@@ -9,4 +9,4 @@ async function dbConnect(){
    return  db.collection('users');
 }
 
-module.exports = dbConnect;
+module.exports = dbConnect; 
