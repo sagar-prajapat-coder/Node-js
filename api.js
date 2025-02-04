@@ -45,6 +45,36 @@ app.get('/user-detail/:id', async (req, res) => {
     }
 });
 
+app.put('/user-update/:id', async (req, res) => {
+    try {
+        let data = await db();
+        let userId = req.params.id;
+
+        if (!ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: 'Invalid User ID format' });
+        }
+
+        let updatedData = req.body;
+        if (!updatedData || Object.keys(updatedData).length === 0) {
+            return res.status(400).json({ error: 'No update data provided' });
+        }
+
+        let result = await data.updateOne(
+            { _id: new ObjectId(userId) },
+            { $set: updatedData }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.json({ message: 'User updated successfully' });
+    } catch (error) {
+        console.error('Error updating user data:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.get('/user-delete/:id', async (req, res) => {  
     try {
         let data = await db(); 
